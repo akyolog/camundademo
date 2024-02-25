@@ -2,6 +2,9 @@ package com.camunda.demo.pictureapp;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import java.io.File;
+
 import org.apache.commons.lang3.builder.MultilineRecursiveToStringStyle;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -10,7 +13,35 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class ProcessVariables {
 
   private String businessKey;
+  private String animalType;
+
+  public String getAnimalType() {
+    return animalType;
+  }
+
+  public void setAnimalType(String animalType) {
+    this.animalType = animalType;
+  }
+
   private Boolean result;
+  private File image;
+  private String error;
+  
+  public String getError() {
+    return error;
+  }
+
+  public void setError(String error) {
+    this.error = error;
+  }
+
+  public File getImage() {
+    return image;
+  }
+
+  public void setImage(File image) {
+    this.image = image;
+  }
 
   public String getBusinessKey() {
     return businessKey;
