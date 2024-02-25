@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="d651899" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.4.0" camunda:diagramRelationId="a2a3f998-780e-4990-906c-df65b8e8196d">
+  <bpmn:process id="Process_AnimalPictureApp" name="AnimalPictureApp" isExecutable="true">
+    <bpmn:startEvent id="StartEvent">
+      <bpmn:outgoing>Flow_12230tm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_12230tm" sourceRef="StartEvent" targetRef="Activity_0mri5lu" />
+    <bpmn:endEvent id="EndEvent">
+      <bpmn:incoming>Flow_0qmnxa3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0qmnxa3" sourceRef="Activity_0mri5lu" targetRef="EndEvent" />
+    <bpmn:serviceTask id="Activity_0mri5lu" name="Get Animal Picture">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="GetAnimalPicture" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12230tm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qmnxa3</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_AnimalPictureApp">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent">
+        <dc:Bounds x="152" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ob2c9o_di" bpmnElement="EndEvent">
+        <dc:Bounds x="512" y="92" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19wo3rh_di" bpmnElement="Activity_0mri5lu">
+        <dc:Bounds x="310" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_12230tm_di" bpmnElement="Flow_12230tm">
+        <di:waypoint x="188" y="100" />
+        <di:waypoint x="310" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qmnxa3_di" bpmnElement="Flow_0qmnxa3">
+        <di:waypoint x="410" y="100" />
+        <di:waypoint x="461" y="100" />
+        <di:waypoint x="461" y="110" />
+        <di:waypoint x="512" y="110" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
