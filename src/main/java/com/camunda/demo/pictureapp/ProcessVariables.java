@@ -24,7 +24,7 @@ public class ProcessVariables {
   }
 
   private Boolean result;
-  private File image;
+  private String image;
   private String error;
   
   public String getError() {
@@ -35,11 +35,11 @@ public class ProcessVariables {
     this.error = error;
   }
 
-  public File getImage() {
+  public String getImage() {
     return image;
   }
 
-  public void setImage(File image) {
+  public void setImage(String image) {
     this.image = image;
   }
 

@@ -1,10 +1,12 @@
 package com.camunda.demo.pictureapp.service;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Base64;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -52,10 +54,10 @@ public class PictureService {
   }
 
 
-  public File selectAnimal(String animalType) throws MalformedURLException, IOException {
+  public String selectAnimal(String animalType) throws MalformedURLException, IOException {
      
-    File image = null;
-    
+    //File image = null;
+    String image = null;
     if(animalType == null || animalType.equalsIgnoreCase("cat")){
       ResponseEntity<List> responseEntity = restCatClient().get().uri("/images/search")
                                                   .accept(MediaType.APPLICATION_JSON)
@@ -67,8 +69,10 @@ public class PictureService {
               ObjectMapper objectMapper = new ObjectMapper();
               ResponseCat cat = objectMapper.convertValue(responseEntity.getBody().get(0), ResponseCat.class) ;
               BufferedImage bufferedImage = ImageIO.read(new URL(cat.getUrl()));
-              image = new File("cat_"+ cat.getId() +".jpg");
-              ImageIO.write(bufferedImage, "jpg", image);
+              ByteArrayOutputStream bos = new ByteArrayOutputStream();
+              //image = new File("cat_"+ cat.getId() +".jpg");
+              ImageIO.write(bufferedImage, "jpg", bos);
+              image = Base64.getEncoder().encodeToString(bos.toByteArray());
             }
           }
     } else if(animalType.equalsIgnoreCase("dog")){
@@ -81,13 +85,13 @@ public class PictureService {
             if(responseEntity.hasBody() && responseEntity.getBody() != null){
               ObjectMapper objectMapper = new ObjectMapper();
               ResponseDog cat = objectMapper.convertValue(responseEntity.getBody(), ResponseDog.class) ;
+              ByteArrayOutputStream bos = new ByteArrayOutputStream();
               BufferedImage bufferedImage = ImageIO.read(new URL(cat.getMessage()));
-              image = new File("dog_12345"+".jpg");
-              ImageIO.write(bufferedImage, "jpg", image);
+              //image = new File("dog_12345"+".jpg");
+              ImageIO.write(bufferedImage, "jpg", bos);
+              image = Base64.getEncoder().encodeToString(bos.toByteArray());
             }
           }
-    } else if(animalType.equalsIgnoreCase("bear")){
-      
     }
     
     return image;

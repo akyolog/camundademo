@@ -9,4 +9,12 @@ Camunda Demo
 
 {"animalType":"dog"}
 
-{"animalType":"bear"}
+
+
+
+BPMN_PROCESS_ID = "Process_AnimalPictureApp";
+
+
+./mvnw spring-boot:run
+
+
