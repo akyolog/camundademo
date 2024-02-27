@@ -143,6 +143,10 @@ We are using for building an packaging maven. Please run the following command i
 docker build --pull --rm -f "Dockerfile" -t camundademo:latest "." 
 ```
 
+```
+docker run -d -p 8080:8080 --name camundademo camundademo:latest
+```
+
 ## Testing
 
 Example request:

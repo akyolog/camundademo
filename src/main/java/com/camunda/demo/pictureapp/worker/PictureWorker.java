@@ -8,7 +8,6 @@ import io.camunda.zeebe.spring.client.annotation.VariablesAsType;
 import com.camunda.demo.pictureapp.ProcessVariables;
 import com.camunda.demo.pictureapp.service.PictureService;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.slf4j.Logger;

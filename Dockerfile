@@ -26,10 +26,8 @@ RUN mvn package
 #
 
 FROM openjdk:17-ea-17-jdk-slim
-COPY --from=build /home/app/target/pictureapp-standalone.jar /home/app/pictureapp-standalone.jar
+COPY --from=build /home/app/target/pictureapp-standalone-spring-boot.jar /home/app/pictureapp-standalone.jar
 
-
-RUN apt-get update
 
 WORKDIR /home/app
 
