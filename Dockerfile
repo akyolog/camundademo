@@ -19,10 +19,7 @@ COPY pom.xml .
 RUN chown -R app.automation /home/app
 USER app
 
-#RUN --mount=type=cache,target=/root/.m2 mvn clean package
 RUN mvn package
-
-#ENV PATH $PATH:/home/automation/.local/bin
 
 #
 # Package stage

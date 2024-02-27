@@ -1,0 +1,20 @@
+@startuml ""
+
+title Camunda Process Example \n\n\n
+
+
+component [Camunda 8 Saas Plattform] as CamundaSaas
+component [Cat-Picture-Api] as CatApi
+component [Dog-Picture-Api] as DogApi
+
+component [Animal-Picture-App] as App
+
+component [Client / Postmann] as Client 
+
+App <..> CamundaSaas : run process
+App ....> CatApi: uses 
+App ....> DogApi: uses 
+App - HTTP : REST Api
+
+Client <....> HTTP: request a picture
+@enduml
