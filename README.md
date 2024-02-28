@@ -15,29 +15,37 @@ With this demo app you are going to learn following concepts:
 - How to implement a REST server in java with spring boot
 - How to use process variables in java client
 - How to controll the process instance in java client
+- How does the test container works and a test process automated
+- How to build a spring boot container with maven
 
 
-## Preconditions & Versions
+## Tools & Versions
+
+Please install the required tools with versions.
 
 ```
-➜  camundademo git:(main) ✗ java -version                                                                            
+# java -version                                                                            
 openjdk version "17.0.10" 2024-01-16
 OpenJDK Runtime Environment Homebrew (build 17.0.10+0)
 OpenJDK 64-Bit Server VM Homebrew (build 17.0.10+0, mixed mode, sharing)
 ```
 
 ```
-➜  camundademo git:(main) ✗ mvn -v     
+# mvn -v     
 Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae)
 ```
 
 ```
-➜  ~ docker -v
+# docker -v
 Docker version 25.0.3, build 4debf41
 ```
 
+- Docker Desktop
+- IntelliJ or Visual Studio code
+
 ## Requirements
 
+The App uses JSON Protocol for communication. To have a standard way of interfaces we have choosen some example apis with JSON Format.
 
 ### Interfaces
 
@@ -59,6 +67,33 @@ Example Response (Array of Image Objects)
 "breeds":[],
 "favourite":{}
 }]
+```
+For getting a dog picture we are going to use following API:
+
+```
+GET https://dog.ceo/api/breeds/image/random
+```
+
+```
+{
+    "message":"https://images.dog.ceo/breeds/terrier-norwich/n02094258_1805.jpg",
+    "status":"success"
+}
+```
+
+### REST interface of app
+
+The app servs the clients with REST interface like following endpoint:
+http://localhost:8080/startPictureProcess
+
+We are going to define our request interface like following format:
+For requesting the cat pictures:
+```
+{"animalType":"cat"}
+```
+Or for requesting the dog pictures:
+```
+{"animalType":"dog"}
 ```
 
 ## Configurations in Camunda 8
@@ -91,26 +126,30 @@ In the following context diagram is the implemented architecture overview.
 
 ![Alt text](docs/images/context_diagramm.png)
 
+Here are the compenents:
+- Camunda 8 plattform
+- Animal-Picture-App (our demo project)
+- Cat-Picture-API (external)
+- Dog-Picture-API (external)
+- Postman as client tool to test our app
 
 ## Process model
 
+Here we are implementing a simple process model with a single service task. 
 
 ![GetAnimalPicture Process](docs/images/process.png)
 
-
-## Process Examples
-
-http://localhost:8080/startPictureProcess
+For the service task we are going to define a static ID to be able to acces it programmaticly later. Please pay attention to change the ID if you would like to use this code in your project.
 
 ```
-{"animalType":"cat"}
+BPMN_PROCESS_ID = "Process_AnimalPictureApp"
 ```
 
-```
-{"animalType":"dog"}
-```
+
 
 ### Settings
+
+Please consider following settings if your have configured your own cluster in camunda 8 plattform.
 
 ```
 # Cloud connection settings
@@ -120,17 +159,21 @@ zeebe.client.cloud.clusterId=8217fee2-b757-44c0-ba81-4d08d5ed31f2
 zeebe.client.cloud.clientId=FKuNJTYaIOuIz6NfkgLEgncrcEZ86iBA
 zeebe.client.cloud.clientSecret=XXXXXXXXXXXXXXXX
 ```
+Spring boot helps us the configuration of services automaticly with only this properties settings.
 
 
-
-```
-BPMN_PROCESS_ID = "Process_AnimalPictureApp"
-```
 
 ## Building
 
-### Fot local tests
-We are using for building an packaging maven. Please run the following command in a terminal window (in the complete) directory:
+We are going to use spring boot maven plugins for packing a complet executable JAR package. This JAR will includes all dependencies and can be executable in container without any external dependencies. After buildding the it will be a standalome image with docker build. 
+
+### For local tests
+We are using for building an packaging maven. 
+```
+mvn clean install
+```
+
+Please run the following command after packing in a terminal window (in the complete) directory:
 
 ```
 ./mvnw spring-boot:run
@@ -139,15 +182,26 @@ We are using for building an packaging maven. Please run the following command i
 
 ### For running in container
 
+If you want to test the app within the container then please follow the next steps:
+
 ```
 docker build --pull --rm -f "Dockerfile" -t camundademo:latest "." 
 ```
+This will build a "camundademo" image and tag it with latest version. For running the image as container please use run command and define the usable free ports in your host machie like 8080.
 
 ```
 docker run -d -p 8080:8080 --name camundademo camundademo:latest
 ```
 
+After running the container the application will be availbe with following endpoint for testing:
+http://localhost:8080/startPictureProcess
+
+
 ## Testing
+
+### Manual testing
+
+Please use following examples with Postman as a client tool for testing.
 
 Example request:
 ```
@@ -164,6 +218,18 @@ Example response:
 ```
 
 ![Client Setup - Create new client](docs/images/postman.png)
+
+
+### Automated Testing
+
+ZeeBe Framework allows us implementing test automations in java within a container.
+This concept will deploy a test container automaticly with the test process. Test automation example can be seen in following java class:
+https://github.com/akyolog/camundademo/blob/main/src/test/java/com/camunda/demo/pictureapp/PictureappContainerTest.java
+
+If you are running the maven tasks in locall machiene the test will be executed automaticly
+```
+mvn test or mvn package
+```
 
 #### Usefull links
 
