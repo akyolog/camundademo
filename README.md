@@ -89,7 +89,7 @@ Please keep the client credentials copied before closing the settings in API con
 
 In the following context diagram is the implemented architecture overview.
 
-![Alt text](out/docs/uml/architecture/context_diagramm.png)
+![Alt text](docs/images/context_diagramm.png)
 
 
 ## Process model

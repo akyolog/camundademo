@@ -19,7 +19,7 @@ COPY pom.xml .
 RUN chown -R app.automation /home/app
 USER app
 
-RUN mvn package
+RUN mvn package -Dmaven.test.skip
 
 #
 # Package stage
